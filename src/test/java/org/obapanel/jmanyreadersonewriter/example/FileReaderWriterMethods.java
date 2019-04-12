@@ -11,6 +11,7 @@ public class FileReaderWriterMethods {
     private static Object locko = new Object();
 
     private static final boolean REALLY_DO_WAITING = false;
+
     private static void waiting(){
         if (REALLY_DO_WAITING){
             doWaiting();
@@ -28,6 +29,19 @@ public class FileReaderWriterMethods {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static File createTempFileWillBeDeletedOnExit() throws IOException {
+        return createTempFileWillBeDeletedOnExit(true);
+    }
+
+
+    public static File createTempFileWillBeDeletedOnExit(boolean deleteOnExit) throws IOException {
+        File temp = File.createTempFile("myTempFile", ".txt");
+        if (deleteOnExit) {
+            temp.deleteOnExit();
+        }
+        return temp;
     }
 
 

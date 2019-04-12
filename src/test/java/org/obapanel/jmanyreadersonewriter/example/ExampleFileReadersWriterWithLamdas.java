@@ -13,8 +13,7 @@ public class ExampleFileReadersWriterWithLamdas {
 
 
     public static void main(String[] args) throws IOException {
-        File temp = File.createTempFile("myTempFile", ".txt");
-        temp.deleteOnExit();
+        final File temp = FileReaderWriterMethods.createTempFileWillBeDeletedOnExit();
         System.out.println("Temp file " + temp.getAbsolutePath());
         final FunctionalReadersWriter<String> fileRW = new FunctionalReadersWriter<String>().
                 withReader( () -> FileReaderWriterMethods.executeReading(temp)).
@@ -23,33 +22,33 @@ public class ExampleFileReadersWriterWithLamdas {
         t01.setName("t01");
         Thread t02 = new Thread(() -> fileRW.write("que tal\nseñor mio"));
         t02.setName("t02");
-        Thread t03 = new Thread(() -> printo(fileRW.read()));
+        Thread t03 = new Thread(() -> shout(fileRW.read()));
         t03.setName("t03");
         Thread t04 = new Thread(() -> fileRW.write("com esta\nusted hoy\n en este lugar"));
         t04.setName("t04");
         Thread t05 = new Thread(() -> fileRW.write("y com esta\ny usted hoy\ny en este lugar"));
         t05.setName("t05");
-        Thread t06 = new Thread(() -> printo(fileRW.read()));
+        Thread t06 = new Thread(() -> shout(fileRW.read()));
         t06.setName("t06");
         Thread t07 = new Thread(() -> fileRW.write("xy com esta\nxy usted hoy\nxy en este lugar"));
         t07.setName("t07");
-        Thread t08 = new Thread(() -> printo(fileRW.read()));
+        Thread t08 = new Thread(() -> shout(fileRW.read()));
         t08.setName("t08");
-        Thread t09 = new Thread(() -> printo(fileRW.read()));
+        Thread t09 = new Thread(() -> shout(fileRW.read()));
         t09.setName("t09");
-        Thread t10 = new Thread(() -> printo(fileRW.read()));
+        Thread t10 = new Thread(() -> shout(fileRW.read()));
         t10.setName("t10");
-        Thread t11 = new Thread(() -> printo(fileRW.read()));
+        Thread t11 = new Thread(() -> shout(fileRW.read()));
         t11.setName("t11");
-        Thread t12 = new Thread(() -> printo(fileRW.read()));
+        Thread t12 = new Thread(() -> shout(fileRW.read()));
         t12.setName("t12");
         Thread t13 = new Thread(() -> fileRW.write("pues muy bien"));
         t13.setName("t13");
-        Thread t14 = new Thread(() -> printo(fileRW.read()));
+        Thread t14 = new Thread(() -> shout(fileRW.read()));
         t14.setName("t14");
-        Thread t15 = new Thread(() -> printo(fileRW.read()));
+        Thread t15 = new Thread(() -> shout(fileRW.read()));
         t15.setName("t15");
-        Thread t16 = new Thread(() -> printo(fileRW.read()));
+        Thread t16 = new Thread(() -> shout(fileRW.read()));
         t16.setName("t16");
 
         t01.start();
@@ -80,7 +79,7 @@ public class ExampleFileReadersWriterWithLamdas {
 
     }
 
-    private static void printo(final String readedFromfileRW) {
+    private static void shout(final String readedFromfileRW) {
         readedFromfileRW.length();
         //System.out.println(Thread.currentThread().getName() + " > " + readedFromfileRW.replaceAll("\n", " ") );
     }

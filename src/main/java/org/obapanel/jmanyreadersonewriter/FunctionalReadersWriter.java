@@ -3,6 +3,10 @@ package org.obapanel.jmanyreadersonewriter;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+/**
+ *
+ * @param <T> Data type of the critical resource
+ */
 public final class FunctionalReadersWriter<T>  extends AbsrtactReadersWriter<T> {
 
     private Supplier<T> reader;
@@ -14,9 +18,9 @@ public final class FunctionalReadersWriter<T>  extends AbsrtactReadersWriter<T> 
     public FunctionalReadersWriter(){}
 
     /**
-     * Contructor with lamdas
-     * @param reader Reader lamda that will be executed into the critical section. Must return the read data
-     * @param writer Writer lamda that will be executed into the critical section. Must write the given data
+     * Contructor with lambda
+     * @param reader Reader lambda that will be executed into the critical section. Must return the read data
+     * @param writer Writer lambda that will be executed into the critical section. Must write the given data
      */
     public FunctionalReadersWriter(Supplier<T> reader, Consumer<T> writer ){
         setReader(reader);
@@ -25,8 +29,8 @@ public final class FunctionalReadersWriter<T>  extends AbsrtactReadersWriter<T> 
 
 
     /**
-     * Sets the reader lamda
-     * @param reader Reader lamda that will be executed into the critical section. Must return the read data
+     * Sets the reader lambda
+     * @param reader Reader lambda that will be executed into the critical section. Must return the read data
      * @return this object
      */
     public FunctionalReadersWriter<T> withReader(Supplier<T> reader){
@@ -35,8 +39,8 @@ public final class FunctionalReadersWriter<T>  extends AbsrtactReadersWriter<T> 
     }
 
     /**
-     * Sets the writer lamda
-     * @param writer Writer lamda that will be executed into the critical section. Must write the given data
+     * Sets the writer lambda
+     * @param writer Writer lambda that will be executed into the critical section. Must write the given data
      * @return this object
      */
     public FunctionalReadersWriter<T> withWriter(Consumer<T> writer){
@@ -45,16 +49,16 @@ public final class FunctionalReadersWriter<T>  extends AbsrtactReadersWriter<T> 
     }
 
     /**
-     * Sets the reader lamda
-     * @param reader Reader lamda that will be executed into the critical section. Must return the read data
+     * Sets the reader lambda
+     * @param reader Reader lambda that will be executed into the critical section. Must return the read data
      */
     void setReader(Supplier<T> reader){
         this.reader = reader;
     }
 
     /**
-     * Sets the writer lamda
-     * @param writer Writer lamda that will be executed into the critical section. Must write the given data
+     * Sets the writer lambda
+     * @param writer Writer lambda that will be executed into the critical section. Must write the given data
      */
     void setWriter(Consumer<T> writer) {
         this.writer = writer;

@@ -6,6 +6,14 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
+ * Abstract class that lets you implement a many readers one writer solution
+ * The abstract class takes care of the synchonization needed to make the reads/writes secure
+ * Only one writer and no readers can be executed at a specific point
+ * Many readers but no writer can be executed at a specific point
+ *
+ * This improves over a simple semaphore or synchronized element, as many readers can use the
+ *  resource at the same time, but only one writer (and no writer and reader at the same time)
+ *
  * As seen in https://codereview.stackexchange.com/questions/127234/reader-writers-problem-using-semaphores-in-java
  * And then https://en.wikipedia.org/wiki/Readers%E2%80%93writers_problem#Third_readers-writers_problem
  * @param <T> Data type of the critical resource
@@ -22,12 +30,13 @@ public abstract class AbsrtactReadersWriter<T> {
     /**
      * Counter for many readers
      */
-    private AtomicInteger readCount = new AtomicInteger(0);
+    //private AtomicInteger readCount = new AtomicInteger(0);
+    private int readCount = 0;
 
 
     /**
-     * Read the resource and then executes the lamnda consumer
-     * The lamda is not executed into the critical section, it doesn't perform the reading execution
+     * Read the resource and then executes the consumer
+     * The lambda is NOT executed into the critical section, it doesn't perform the reading execution
      * @param afterRead This consumer is executed after the reading has been done
      */
     public final void read(Consumer<T> afterRead){
@@ -45,7 +54,8 @@ public abstract class AbsrtactReadersWriter<T> {
             // Entry to read
             serviceQueueSemaphore.acquire();
             readCountSempaphote.acquire();
-            if (readCount.incrementAndGet() == 1){
+            readCount++;
+            if (readCount == 1){
                 resourceSemaphore.acquire();
             }
             serviceQueueSemaphore.release();
@@ -54,7 +64,8 @@ public abstract class AbsrtactReadersWriter<T> {
             data = executeReading();
             // Exit to read
             readCountSempaphote.acquire();
-            if (readCount.decrementAndGet() == 0){
+            readCount--;
+            if (readCount == 0){
                 resourceSemaphore.release();
             }
             readCountSempaphote.release();
@@ -74,8 +85,8 @@ public abstract class AbsrtactReadersWriter<T> {
 
 
     /**
-     * Executes the lamnda supplier and then writes the supplied data
-     * The lamda is not executed into the critical section, it doesn't perform the writing execution
+     * Executes the supplier and then writes the supplied data
+     * The lambda is NOT executed into the critical section, it doesn't perform the writing execution
      * @param beforeWrite This supplier is executed before the writting process
      */
     public final void write(Supplier<T> beforeWrite){

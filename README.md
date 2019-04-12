@@ -10,7 +10,10 @@ See discussion here: https://codereview.stackexchange.com/questions/216603/many-
 
 Well, as it is apache licence, you may use as you want.  
 The preferred method would be to inherit  `org.obapanel.jmanyreadersonewriter.AbsrtactReadersWriter` and write the critical sections on the abstract methods `executeReading` and `executeWriting`.  
-Then instantiate the class and call `read` and `write` as you need.  
+Then instantiate the class and call `read` and `write` as you need.
+
+See examples on `org.obapanel.jmanyreadersonewriter.example.ExampleFileReadersWriter`
+
 
 ## Source
 
