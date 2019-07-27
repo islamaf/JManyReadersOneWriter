@@ -73,7 +73,7 @@ public class AbsrtactReadersWriterTest {
         public Object locko = new Object();
 
         @Override
-        protected Void executeReading() {
+        public Void executeReading() {
             if (accesing){
                 error = true;
                 throw  new IllegalStateException("Should not be accessing");
@@ -86,7 +86,7 @@ public class AbsrtactReadersWriterTest {
         }
 
         @Override
-        protected void executeWriting(Void data) {
+        public void executeWriting(Void data) {
             if (accesing){
                 error = true;
                 throw  new IllegalStateException("Should not be accessing");
@@ -100,7 +100,7 @@ public class AbsrtactReadersWriterTest {
         private synchronized void accesResource(){
             synchronized (locko){
                 try {
-                    long w = 10L +  random.nextInt(250)*10L;
+                    long w = 10L +  random.nextInt(25)*10L;
                     System.out.println(Thread.currentThread().getName() + " | wait " + w);
                     locko.wait(w);
                 } catch (InterruptedException e) {

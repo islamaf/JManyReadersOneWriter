@@ -18,7 +18,7 @@ import java.util.function.Supplier;
  * And then https://en.wikipedia.org/wiki/Readers%E2%80%93writers_problem#Third_readers-writers_problem
  * @param <T> Data type of the critical resource
  */
-public abstract class AbsrtactReadersWriter<T> {
+public abstract class AbsrtactReadersWriter<T> implements IReadersWriter<T> {
 
     /**
      * Semaphores
@@ -34,20 +34,13 @@ public abstract class AbsrtactReadersWriter<T> {
     private int readCount = 0;
 
 
-    /**
-     * Read the resource and then executes the consumer
-     * The lambda is NOT executed into the critical section, it doesn't perform the reading execution
-     * @param afterRead This consumer is executed after the reading has been done
-     */
+    @Override
     public final void read(Consumer<T> afterRead){
         afterRead.accept(read());
     }
 
 
-    /**
-     * Read the resource
-     * @return data from resource
-     */
+    @Override
     public final T read() {
         T data = null;
         try {
@@ -81,22 +74,15 @@ public abstract class AbsrtactReadersWriter<T> {
      * Must not be synchronized (the semaphores on the class take care of synchronization)
      * @return data from resource
      */
-    abstract protected T executeReading();
+    protected abstract T executeReading();
 
 
-    /**
-     * Executes the supplier and then writes the supplied data
-     * The lambda is NOT executed into the critical section, it doesn't perform the writing execution
-     * @param beforeWrite This supplier is executed before the writting process
-     */
+    @Override
     public final void write(Supplier<T> beforeWrite){
         write(beforeWrite.get());
     }
 
-    /**
-     * Writes to the resource
-     * @param data Data to be written
-     */
+    @Override
     public final void write(T data) {
         try {
             // Entry write
@@ -118,7 +104,7 @@ public abstract class AbsrtactReadersWriter<T> {
      * Reimplement with the access to the critical section
      * @param data data to resource
      */
-    abstract protected void executeWriting(T data);
+    protected abstract void executeWriting(T data);
 
 
 }

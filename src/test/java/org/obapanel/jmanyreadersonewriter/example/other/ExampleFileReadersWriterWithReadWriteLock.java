@@ -1,11 +1,13 @@
-package org.obapanel.jmanyreadersonewriter.example;
+package org.obapanel.jmanyreadersonewriter.example.other;
 
 import org.obapanel.jmanyreadersonewriter.AbsrtactReadersWriter;
+import org.obapanel.jmanyreadersonewriter.example.FileReaderWriterMethods;
+import org.obapanel.jmanyreadersonewriter.other.AbstractReadersWriterReadWriteLock;
 
 import java.io.File;
 import java.io.IOException;
 
-public class ExampleFileReadersWriter {
+public class ExampleFileReadersWriterWithReadWriteLock {
 
 
 
@@ -79,7 +81,7 @@ public class ExampleFileReadersWriter {
         //System.out.println(Thread.currentThread().getName() + " > " + readedFromfileRW.replaceAll("\n", " ") );
     }
 
-    private static class FileRW extends AbsrtactReadersWriter<String> {
+    private static class FileRW extends AbstractReadersWriterReadWriteLock<String> {
 
 
         File file;
