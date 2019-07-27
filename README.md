@@ -27,3 +27,10 @@ Other implementations I took a look:
 * https://github.com/Spirid/Java-DemoReaders-writers-problem
 * https://github.com/omartoutounji/readers-writers-problem
 * https://github.com/lmiguelmh/readers-writers-app/tree/master/dev/readers-writers-app/src/main/java/pucp/pl/readers
+
+## Disclaimer
+
+This library is done as an programming exercice, but you could use the basic java reader writer implementation  
+https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/locks/ReadWriteLock.html  
+
+
